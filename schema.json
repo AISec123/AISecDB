@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/AISec123/AISecDB/main/schema.json",
+  "title": "AISecDB",
+  "description": "AI 安全知识图谱数据集。sections 定义板块，entries 是实体，实体通过 tags 互相连接。",
+  "type": "object",
+  "required": ["name", "updated", "sections", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "指向本文件，用于编辑器自动补全"
+    },
+    "name": {
+      "type": "string",
+      "description": "数据集名称"
+    },
+    "description": {
+      "type": "string",
+      "description": "一句话说明"
+    },
+    "updated": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "内容最后修改日期，YYYY-MM-DD。消费方拿它当数据新鲜度"
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "description": "板块。顺序即页面上的展示顺序",
+      "items": {
+        "type": "object",
+        "required": ["key", "zh", "en"],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "唯一标识，entries[].section 指向它。加板块不用改代码"
+          },
+          "zh": { "type": "string", "description": "中文名" },
+          "en": { "type": "string", "description": "英文名" },
+          "color": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "description": "板块色，页面用它做分区和分类菜单的配色"
+          },
+          "desc": { "type": "string", "description": "中文定位说明，显示在板块标题下" },
+          "desc_en": { "type": "string", "description": "英文定位说明" }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "description": "实体。name 与 url 必填",
+      "items": {
+        "type": "object",
+        "required": ["name", "url", "section"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "实体名称，同一数据集内应唯一"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://",
+            "description": "官网、仓库或原文地址"
+          },
+          "section": {
+            "type": "string",
+            "description": "所属板块的 key，必须在 sections 里存在"
+          },
+          "desc": {
+            "type": "string",
+            "description": "中文一句话说明。收录口径：说清它做什么，不写融资和奖项"
+          },
+          "desc_en": {
+            "type": "string",
+            "description": "英文说明，缺省回落中文"
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "横切标签。这是图谱里的边：共享标签的实体会因此关联"
+          },
+          "star": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "GitHub star 数，有则显示"
+          },
+          "region": {
+            "type": "string",
+            "description": "国家或地区代码，如 US / CN / IL / CH / EU"
+          },
+          "logo": {
+            "type": "string",
+            "pattern": "^assets/logos/",
+            "description": "品牌图标，必须是站点本地的 assets/logos/ 路径。不填则退回首字母字标"
+          },
+          "post": {
+            "type": "string",
+            "format": "uri",
+            "description": "关于该实体的深度长文链接"
+          },
+          "github": {
+            "type": "string",
+            "format": "uri",
+            "description": "GitHub 仓库地址"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["featured", "active", "archived"],
+            "description": "featured 会置顶并打「推荐」标；archived 表示项目已停更"
+          },
+          "added": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "收录日期，YYYY-MM-DD，用于「最近更新」排序"
+          }
+        }
+      }
+    }
+  }
+}
