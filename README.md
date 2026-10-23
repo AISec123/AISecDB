@@ -79,7 +79,22 @@ curl -s https://raw.githubusercontent.com/AISec123/AISecDB/main/entries.json \
 
 ## 许可
 
-待定。在定下来之前，本仓库内容归 AISec123 所有，未经许可请勿再分发。
+**数据**（`entries.json` 的实体信息、描述、标签与板块编排）采用
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)：
+
+- 可以复制、分发、修改，**限非商业用途**
+- 必须署名并附许可链接，说明改过没有
+- 衍生数据必须沿用同一许可，不能改宽松
+- 商业使用需另行授权，[开 issue](https://github.com/AISec123/AISecDB/issues/new) 联系
+
+**`schema.json`** 采用 MIT —— 它描述的是格式，不是内容，随便用。
+
+引用格式：
+
+> AISec123. AISecDB: AI 安全知识图谱数据集. 2026. https://github.com/AISec123/AISecDB
+
+注意这不是 CC0 / CC BY 那种开放许可：商用要授权，所以部分只收开放许可的数据聚合站不会收录。
+各公司的名称、产品名与 logo 归其所有者，不在本许可范围内。全文见 [LICENSE](LICENSE)。
 
 ## 相关
 
